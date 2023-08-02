@@ -19,7 +19,7 @@ if (!$conn) {
 
 
     $sql = "insert into moves (move,xdir,ydir)
-    values('stop','0','0')";
+    values('forward','10','10')";
 
 
 

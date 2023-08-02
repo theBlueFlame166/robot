@@ -4,12 +4,7 @@ $username = "root";
 $password = "";
 $dbname = "robot";
 
-// include_once 'SummerTrainnig/add.php'
-// $forward = $_POST["forward"];
-// $left = $_POST["left"];
-// $stop = $_POST["stop"];
-// $right = $_POST["right"];
-// $buttom = $_POST["buttom"];
+
 
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);
@@ -17,20 +12,25 @@ $conn = mysqli_connect($servername, $username, $password, $dbname);
 if (!$conn) {
   die("Connection failed: " . mysqli_connect_error());
 }
-//put the insert code here 
 
-echo "bottom";
-echo "<br>";
-    $sql = "insert into moves (move)
-    values('bottom')";
-  
+
+// $x=$_POST["x"];
+// $y=$_POST["y"];
+
+
+    $sql = "insert into moves (move,xdir,ydir)
+    values('backward','10','10')";
+
+
+
 
 if (mysqli_query($conn, $sql)) {
-  echo "\n New record created successfully ";
+  echo "New record created successfully";
 } else {
   echo "Error: " . $sql . "<br>" . mysqli_error($conn);
 }
 
 mysqli_close($conn);
 ?>
+
 

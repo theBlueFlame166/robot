@@ -5,20 +5,23 @@ $password = "";
 $dbname = "robot";
 
 
+
 // Create connection
 $conn = mysqli_connect($servername, $username, $password, $dbname);
 // Check connection
 if (!$conn) {
   die("Connection failed: " . mysqli_connect_error());
 }
-//put the insert code here 
 
 
-echo "left";
-echo "<br>";
+// $x=$_POST["x"];
+// $y=$_POST["y"];
 
-    $sql = "insert into moves (move)
-    values('left')";
+
+    $sql = "insert into moves (move,xdir,ydir)
+    values('left','10','10')";
+
+
 
 
 if (mysqli_query($conn, $sql)) {
@@ -29,4 +32,5 @@ if (mysqli_query($conn, $sql)) {
 
 mysqli_close($conn);
 ?>
+
 
