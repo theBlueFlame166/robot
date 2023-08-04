@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Live Update</title>
+	<meta charset="UTF-8">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+</head>
+
+<style>
+	.hidden {
+		display: none;
+	}
+
+	/* CSS comes here */
+
+	body {
+		font-family: Arial, sans-serif;
+	}
+
+	button {
+		padding: 10px;
+		background-color: #6a67ce;
+		color: #FFFFFF;
+		border: 0;
+		cursor: pointer;
+		border-radius: 5px;
+		font-size: 20px;
+	}
+
+	#output {
+		background-color: #F9F9F9;
+		padding: 10px;
+		width: 100%;
+		margin-top: 20px;
+		line-height: 30px;
+		font-size: 20px;
+	}
+
+	.hide {
+		display: none;
+	}
+
+	.show {
+		display: block;
+	}
+
+	#button {
+		visibility: hidden;
+	}
+
+	/* CSS */
+	.button-71 {
+		background-color: #ff8517;
+		border: 0;
+		border-radius: 56px;
+		color: #fff;
+		cursor: pointer;
+		display: inline-block;
+		font-size: 24px;
+		font-weight: 900;
+		outline: 0;
+		padding: 13px 17px;
+		position: relative;
+		text-align: center;
+		text-decoration: none;
+		transition: all .3s;
+		user-select: none;
+		-webkit-user-select: none;
+		touch-action: manipulation;
+	}
+
+	.button-71:before {
+		background-color: initial;
+		background-image: linear-gradient(#fff 0, rgba(255, 255, 255, 0) 100%);
+		border-radius: 125px;
+		content: "";
+		height: 45%;
+		left: 4%;
+		opacity: .5;
+		position: absolute;
+		top: 0;
+		transition: all .3s;
+		width: 85%;
+	}
+
+	.button-71:hover {
+		box-shadow: rgba(255, 255, 255, .2) 0 3px 15px inset, rgba(0, 0, 0, .1) 0 3px 5px, rgba(0, 0, 0, .1) 0 10px 13px;
+		transform: scale(1.05);
+	}
+
+	@media (min-width: 768px) {
+		.button-71 {
+			padding: 16px 48px;
+		}
+	}
+</style>
+
+<body onload="stt()">
+
+	<p id="demo" style="display:none;"></p>
+
+	<script>
+		function stt() {
+			var speech = document.getElementById("voice");
+			var output = document.getElementById("output");
+			var action = document.getElementById("action");
+
+			var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+			var recognition = new SpeechRecognition();
+
+			recognition.onstart = function () {
+				action.innerHTML = "<small>Listening, please speak...</small>";
+			};
+
+			recognition.onspeechend = function () {
+				action.innerHTML = "<small>Stopped listening</small>";
+				recognition.stop();
+			};
+
+			recognition.onresult = function (event) {
+				var transcript = event.results[0][0].transcript;
+				output.innerHTML = transcript;
+				output.classList.remove("hide");
+				speech.value = transcript;
+				document.getElementById("voiceForm").submit(); // Automatically submit the form
+			};
+
+			recognition.start();
+		}
+	</script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			startVoiceRecognition();
+		});
+
+		function startVoiceRecognition() {
+			var speech = document.getElementById("voice");
+			var output = document.getElementById("output");
+			var action = document.getElementById("action");
+
+			var SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+			var recognition = new SpeechRecognition();
+
+			recognition.onstart = function () {
+				action.innerHTML = "<small>Listening, please speak...</small>";
+			};
+
+			recognition.onspeechend = function () {
+				action.innerHTML = "<small>Stopped listening</small>";
+				recognition.stop();
+			};
+
+			recognition.onresult = function (event) {
+				var transcript = event.results[0][0].transcript;
+				output.innerHTML = transcript;
+				output.classList.remove("hide");
+				speech.value = transcript;
+				document.getElementById("voiceForm").submit(); // Automatically submit the form
+			};
+
+			// Start voice recognition after a small delay to ensure DOM is fully loaded
+			setTimeout(function () {
+				recognition.start();
+			}, 100);
+		}
+	</script>
+	<div align="center">
+		<br>
+		<!-- Removed the "Start" button onclick="stt()" -->
+		<div id="output" class="hide" name="voice"></div>
+		<p><span id="action"></span></p>
+		<form id="voiceForm" action="insert-voice.php" method="post">
+			<input type="hidden" id="voice" name="voice" value="none">
+		</form>
+	</div>
+
+</body>
+
+</html>
